@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="software.egger.aa_hello_world_minimal">
+
+    <!--
+      android:allowBackup="true" // Take part in system wide backup and restore.
+      android:icon="@mipmap/ic_launcher" // Icon of the launcher see res/mipmap
+      android:label="Hello World" // Could also be a res.
+    -->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Hello World">
+
+        <!-- The activities of the app -->
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <!-- Which indents do we want to respond to? -->
+
+                <!-- This is the main entry point -->
+                <action android:name="android.intent.action.MAIN" />
+
+                <!-- Place the icon in the system launcher -->
+                <!-- One app can have more than one activity in the system launcher -->
+                <!-- The application icon is the default but can be overwritten for each activity -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
