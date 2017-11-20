@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 01 define a simple check box preference -->
+    <CheckBoxPreference
+        android:key="pref_send_usage_info"
+        android:title="Usage info"
+        android:summary="Send usage info to ese"
+        android:defaultValue="true"
+        />
+</PreferenceScreen>
