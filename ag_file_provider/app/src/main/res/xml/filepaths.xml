@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- This specifies a subfolder in getFilesDir() -->
+    <!-- other possibilities are: cache-path, external-path etc... -->
+    <files-path
+        name="shared files"
+        path="shared/" />
+</paths>

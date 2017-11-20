@@ -1,0 +1,5 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <tech-list>
+        <tech>android.nfc.tech.NfcA</tech> <!-- only state the techs of the Tag. Not more! Otherwise it is not matched -->
+    </tech-list>
+</resources>
