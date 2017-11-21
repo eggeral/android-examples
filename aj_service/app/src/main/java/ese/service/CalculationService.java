@@ -28,7 +28,6 @@ public class CalculationService extends IntentService {
 
     public static void startCalculation(Context context, int seconds) {
 
-
         Intent intent = new Intent(context, CalculationService.class);
         intent.setAction(ACTION_CALC);
         intent.putExtra(EXTRA_SECONDS, seconds);

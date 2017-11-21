@@ -61,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
         CustomArrayAdapter adapter = new CustomArrayAdapter(this, items);
         listView.setAdapter(adapter);
 
+        // Exercise
+        // Create a list view of strings. Open a child activity on key press
+        // Use a list of class Person. (name, address). Show the name of the first person
+        // bold large in the first row. Show the address in a smaller font in a second row.
+
     }
 
     private static class CustomArrayAdapter extends ArrayAdapter<String> {

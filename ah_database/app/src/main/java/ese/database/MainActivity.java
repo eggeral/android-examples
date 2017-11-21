@@ -142,6 +142,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Example: Create a simple shopping list (special task; add imaged to the items)
+        // Example: Create a simple shopping list (special task; add images to the items)
     }
 }
