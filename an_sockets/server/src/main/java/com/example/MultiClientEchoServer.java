@@ -17,7 +17,7 @@ public class MultiClientEchoServer {
 
                 System.out.println("Client connected: " + socket.toString());
 
-                final Thread communicatioThread = new Thread(new Runnable() {
+                final Thread communicationThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -41,7 +41,7 @@ public class MultiClientEchoServer {
                     }
                 });
 
-                communicatioThread.start();
+                communicationThread.start();
             }
         } catch (IOException e) {
             e.printStackTrace();

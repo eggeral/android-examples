@@ -192,30 +192,61 @@ public class MainActivity extends AppCompatActivity {
 //        addPersonTask.execute();
 
 
+//        AsyncTask<String, Integer, Void> httpTask = new AsyncTask<String, Integer, Void>() {
+//            @Override
+//            protected Void doInBackground(String... params) {
+//                try {
+//                    URL url = new URL("http://192.168.134.250:8080/rest/persons");
+//                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+//                    try {
+//                        JsonReader reader = new JsonReader(new InputStreamReader(urlConnection.getInputStream()));
+//                        List<Person> persons = new ArrayList<>();
+//                        reader.beginArray();
+//                        while (reader.hasNext()) {
+//                            Person person = new Person();
+//                            reader.beginObject();
+//                            reader.nextName();
+//                            person.setName(reader.nextString());
+//                            reader.nextName();
+//                            person.setAddress(reader.nextString());
+//                            persons.add(person);
+//                            reader.endObject();
+//                        }
+//                        reader.endArray();
+//                        reader.close();
+//
+//                        Log.i(TAG, "onCreate: received - " + persons);
+//
+//                    } finally {
+//                        urlConnection.disconnect();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                return null;
+//            }
+//        };
+//        httpTask.execute();
+
+
+        // == Round trip including JSON serialization / deserialization on the Android side.
         AsyncTask<String, Integer, Void> httpTask = new AsyncTask<String, Integer, Void>() {
             @Override
             protected Void doInBackground(String... params) {
                 try {
-                    URL url = new URL("http://192.168.134.250:8080/rest/persons");
+                    URL url = new URL("http://192.168.1.146:8080/rest/persons");
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     try {
-                        JsonReader reader = new JsonReader(new InputStreamReader(urlConnection.getInputStream()));
-                        List<Person> persons = new ArrayList<>();
-                        reader.beginArray();
-                        while (reader.hasNext()) {
-                            Person person = new Person();
-                            reader.beginObject();
-                            reader.nextName();
-                            person.setName(reader.nextString());
-                            reader.nextName();
-                            person.setAddress(reader.nextString());
-                            persons.add(person);
-                            reader.endObject();
-                        }
-                        reader.endArray();
-                        reader.close();
+                        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                        InputStreamReader reader = new InputStreamReader(in);
+                        JsonReader jsonReader = new JsonReader(reader);
 
-                        Log.i(TAG, "onCreate: received - " + persons);
+                        PersonReader personReader = new PersonReader();
+                        List<ese.rest.Person> persons = personReader.readPersons(jsonReader);
+
+                        for (ese.rest.Person person : persons) {
+                            Log.i(TAG, "doInBackground: " + person);
+                        }
 
                     } finally {
                         urlConnection.disconnect();
@@ -227,6 +258,36 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         httpTask.execute();
+
+        AsyncTask<String, Integer, Void> putTask = new AsyncTask<String, Integer, Void>() {
+            @Override
+            protected Void doInBackground(String... params) {
+                try {
+                    URL url = new URL("http://192.168.1.146:8080/rest/persons");
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setRequestMethod("PUT");
+
+                    try {
+                        OutputStream outputStream = urlConnection.getOutputStream();
+                        JsonWriter jsonWriter = new JsonWriter(new OutputStreamWriter(outputStream));
+
+                        PersonWriter personWriter = new PersonWriter();
+                        personWriter.writePerson(new ese.rest.Person("test", "test"), jsonWriter);
+                        jsonWriter.flush();
+
+                    } finally {
+                        urlConnection.disconnect();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        putTask.execute();
+
 
         // Exercise shopping list with REST services and UI
     }
